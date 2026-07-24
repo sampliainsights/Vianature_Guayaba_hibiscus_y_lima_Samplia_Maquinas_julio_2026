@@ -1375,7 +1375,7 @@
     /* INSIGHTS */
     .insight-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: var(--content-gap)
     }
 
@@ -5191,55 +5191,18 @@
         body: `El <strong>${pConoc}% de los participantes no conocía la marca Vianature</strong> antes del sampling. La activación actúa como palanca de descubrimiento, generando una primera prueba real en un público que de otro modo no habría llegado a la marca.`
       });
 
-      // 3. Intención de compra — % "Compradores potenciales" en 7450e1ePqJIhQqnQtKUL vs benchmark 48%
-      const iIdx = getIdx('7450e1ePqJIhQqnQtKUL');
+      // 3. Intención de compra — % "Sí" al precio de 2,69€ en HMv91D3gCiuBBD4rllRm vs benchmark 48%
+      const iIdx = getIdx('HMv91D3gCiuBBD4rllRm');
       const iArr = getColData(rows, iIdx);
-      const compradores = iArr.filter(v => { const l = norm(v); return l.includes('compradores potenciales') || l.includes('comprador potencial'); }).length;
+      const compradores = iArr.filter(v => { const l = norm(v); return l === 'si' || l.startsWith('si,') || l.startsWith('si '); }).length;
       const iPct = iArr.length ? pct(compradores, iArr.length) : 0;
       const iDiff = iPct - BENCH_INTENCION;
-      const iCmp = iDiff >= 0 ? `<strong>supera en ${iDiff} puntos</strong> el benchmark de ${BENCH_INTENCION}%` : `queda <strong>${Math.abs(iDiff)} puntos por debajo</strong> del benchmark de ${BENCH_INTENCION}%`;
+      const iCmp = iDiff > 0 ? `<strong>supera en ${iDiff} puntos</strong> el benchmark de ${BENCH_INTENCION}%` : iDiff < 0 ? `queda <strong>${Math.abs(iDiff)} puntos por debajo</strong> del benchmark de ${BENCH_INTENCION}%` : `<strong>iguala</strong> el benchmark de ${BENCH_INTENCION}%`;
       insights.push({
         icon: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>',
-        title: `${iPct}% son compradores potenciales`,
-        body: `El <strong>${iPct}% se sitúa como comprador potencial</strong> de Vianature en formato familiar 750ml, lo que ${iCmp} de la categoría (Benchmark 2025). La activación convierte el interés generado en la tienda en intención real de compra.`
+        title: `${iPct}% compraría al precio de 2,69€`,
+        body: `El <strong>${iPct}% compraría la bebida Vianature en formato familiar 750ml al precio de 2,69€</strong>, lo que ${iCmp} de la categoría (Benchmark 2025). La activación convierte el interés generado en la tienda en intención real de compra.`
       });
-
-      // 4. Valoración del sabor (L0Sy8268u2gC8y5vwNRw)
-      const sIdx = getIdx('L0Sy8268u2gC8y5vwNRw');
-      const sArr = getColData(rows, sIdx);
-      const sTop = sortedEntries(countSingle(sArr), 3);
-      let sBody = `El sabor es un driver clave de la valoración del producto tras la prueba.`;
-      if (sTop.length) {
-        const totalS = sArr.length;
-        const t1 = sTop[0];
-        sBody = `Tras probarla, <strong>${t1[0]}</strong> es la valoración mayoritaria del sabor de Vianature (${pct(t1[1], totalS)}%)`;
-        if (sTop.length >= 2) sBody += `, seguida de <strong>${sTop[1][0]}</strong> (${pct(sTop[1][1], totalS)}%)`;
-        sBody += `. Una valoración positiva del sabor es la palanca principal para la recompra y la recomendación.`;
-      }
-      insights.push({
-        icon: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>',
-        title: 'El sabor es el gran valorado de la prueba',
-        body: sBody
-      });
-
-      // 5. Lo que menos ha gustado (xJOsNQGu05DBNs7yuzUe · multi)
-      const fIdx = getIdx('xJOsNQGu05DBNs7yuzUe');
-      const fRespondents = rows.filter(r => (r[fIdx] || '').toString().trim()).length;
-      const fTop = sortedEntries(countSingle(getColDataMulti(rows, fIdx)), 2);
-      if (fTop.length && fRespondents) {
-        const [fLabel, fCount] = fTop[0];
-        const fPct = pct(fCount, fRespondents);
-        const nlab = norm(fLabel);
-        const isDistribution = nlab.includes('encontrar') || nlab.includes('supermercado') || nlab.includes('marca blanca');
-        const closing = isDistribution
-          ? 'Es una barrera de <strong>distribución y presencia en lineal</strong>, no de producto: reforzar la disponibilidad puede desbloquear la intención de compra ya generada en la activación.'
-          : 'Conocer el aspecto peor valorado permite orientar los siguientes ajustes de producto para maximizar la conversión.';
-        insights.push({
-          icon: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
-          title: `Lo que menos ha gustado marca el foco de mejora`,
-          body: `El aspecto menos valorado de Vianature es «<strong>${fLabel}</strong>» (${fPct}% de quienes señalan algo)${fTop.length >= 2 ? `, seguido de «${fTop[1][0]}» (${pct(fTop[1][1], fRespondents)}%)` : ''}. ${closing}`
-        });
-      }
 
       container.innerHTML = '';
       insights.forEach(ins => { const card = document.createElement('div'); card.className = 'insight-card'; card.innerHTML = `<div class="insight-icon">${ins.icon}</div><div class="insight-title">${ins.title}</div><div class="insight-body">${ins.body}</div>`; container.appendChild(card); });
