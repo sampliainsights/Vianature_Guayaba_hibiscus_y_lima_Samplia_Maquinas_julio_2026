@@ -312,6 +312,60 @@
       margin-top: 0
     }
 
+    .sidebar-distribution {
+      margin: 16px 8px 0;
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      overflow: hidden;
+      background: var(--bg-card)
+    }
+
+    .sidebar-distribution-title {
+      padding: 8px 9px;
+      border-bottom: 1px solid var(--border);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--txt-3)
+    }
+
+    .sidebar-distribution table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed
+    }
+
+    .sidebar-distribution th,
+    .sidebar-distribution td {
+      padding: 5px 8px;
+      font-size: 10px;
+      text-align: left;
+      white-space: nowrap
+    }
+
+    .sidebar-distribution th {
+      font-weight: 600;
+      color: var(--txt-3);
+      background: var(--bg-input)
+    }
+
+    .sidebar-distribution td {
+      color: var(--txt-2);
+      border-top: 1px solid var(--border)
+    }
+
+    .sidebar-distribution th:last-child,
+    .sidebar-distribution td:last-child {
+      width: 78px;
+      text-align: center
+    }
+
+    .sidebar-distribution td:last-child {
+      font-weight: 700;
+      color: var(--accent-200)
+    }
+
     .nav-item {
       display: flex;
       align-items: center;
@@ -646,7 +700,7 @@
     /* KPI CARDS */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: var(--content-gap);
       margin-bottom: var(--content-gap)
     }
@@ -2948,6 +3002,29 @@
           <div style="margin-top:10px;font-size:10px;color:var(--txt-3);" id="sidebarFilterCount"></div>
         </div>
 
+        <div class="sidebar-distribution">
+          <div class="sidebar-distribution-title">Distribución por centro</div>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Centro</th>
+                <th scope="col">Distribución</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>La Vaguada</td><td>13%</td></tr>
+              <tr><td>La Maquinista</td><td>13%</td></tr>
+              <tr><td>Gran Via de Hortaleza</td><td>12%</td></tr>
+              <tr><td>Parquesur</td><td>12%</td></tr>
+              <tr><td>Glòries</td><td>11%</td></tr>
+              <tr><td>Carrefour Alcobendas</td><td>11%</td></tr>
+              <tr><td>La Gavia</td><td>10%</td></tr>
+              <tr><td>Splau</td><td>9%</td></tr>
+              <tr><td>Plaza Norte 2</td><td>9%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
         <div class="sidebar-nav-section" style="margin-top:18px;">Informe</div>
         <a class="nav-item active" href="#kpis" onclick="closeSidebarMobile()">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -3111,6 +3188,20 @@
             <div class="section-line"></div>
           </div>
           <div class="kpi-grid row-gap">
+            <div class="kpi-card">
+              <div class="kpi-icon" style="background:var(--brand-muted);color:var(--primary-100);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m21 8-9-5-9 5 9 5 9-5Z" />
+                  <path d="m3 8 9 5 9-5" />
+                  <path d="M3 12l9 5 9-5" />
+                  <path d="M3 16l9 5 9-5" />
+                </svg>
+              </div>
+              <div class="kpi-label">Nº de muestras repartidas</div>
+              <div class="kpi-value" style="color:var(--accent-100);">30.000</div>
+              <div class="kpi-sub">unidades</div>
+            </div>
             <div class="kpi-card">
               <div class="kpi-icon" style="background:var(--brand-muted);color:var(--primary-100);">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
